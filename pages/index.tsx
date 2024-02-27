@@ -18,7 +18,7 @@ export default function Index({user, token}: Props) {
     <h1>
       Welcome to MitamatchOperations!
       <br />
-      Successfully logged in as {user.username}.
+      Successfully logged in as {user.global_name}.
     </h1>
   );
 }
@@ -34,6 +34,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async function (ctx
       },
     };
   }
-  const { user, token } = parsed;
-  return { props: { user, token } };
+  return { props: { ...parsed } };
 };
