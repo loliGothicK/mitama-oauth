@@ -4,23 +4,21 @@ import { GetServerSidePropsContext } from "next";
 import { config } from "./config";
 import { DiscordUser } from "./types";
 
-export function parseUser(ctx: GetServerSidePropsContext): DiscordUser | null {
-  console.log(ctx.req.headers.cookie);
+export function parseUser(ctx: GetServerSidePropsContext): { user: DiscordUser, token: string } | null {
   if (!ctx.req.headers.cookie) {
-    return null;
+    throw new Error("No cookie found");
   }
 
   const token = parse(ctx.req.headers.cookie)[config.cookieName];
-  console.log(token);
+
   if (!token) {
-    return null;
+    throw new Error("No token found");
   }
 
   try {
     const { iat, exp, ...user } = verify(token, config.jwtSecret) as DiscordUser & { iat: number; exp: number };
-    console.log(user);
-    return user;
+    return { user, token };
   } catch (e) {
-    return null;
+    return { user: null, token: null};
   }
 }

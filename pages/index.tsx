@@ -5,13 +5,14 @@ import { DiscordUser } from "../utils/types";
 
 interface Props {
   user: DiscordUser;
+  token: string;
 }
 
-export default function Index({user}: Props) {
+export default function Index({user, token}: Props) {
   const router = useRouter();
   // 1秒後にリダイレクト
   setTimeout(() => {
-    router.push(`mitamatch://login?user=${user}`);
+    router.push(`mitamatch://login?token=${token}`);
   }, 1000);
   return (
     <h1>
@@ -23,9 +24,9 @@ export default function Index({user}: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
-  const user = parseUser(ctx);
+  const parsed = parseUser(ctx);
 
-  if (!user) {
+  if (!parsed) {
     return {
       redirect: {
         destination: "/api/oauth",
@@ -33,6 +34,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async function (ctx
       },
     };
   }
-
-  return { props: { user } };
+  const { user, token } = parsed;
+  return { props: { user, token } };
 };
