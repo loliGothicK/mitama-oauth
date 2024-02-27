@@ -6,7 +6,7 @@ import { config } from "../../utils/config";
 import { DiscordUser } from "../../utils/types";
 
 const scope = ["identify"].join(" ");
-const REDIRECT_URI = `${config.appUri}/api/oauth`;
+const REDIRECT_URI = `${config.appUri}`;
 
 const OAUTH_QS = new URLSearchParams({
   client_id: config.clientId,
