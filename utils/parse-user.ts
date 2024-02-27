@@ -4,7 +4,7 @@ import { GetServerSidePropsContext } from "next";
 import { config } from "./config";
 import { DiscordUser } from "./types";
 
-export function parseUser(ctx: GetServerSidePropsContext): { user: DiscordUser, token: string } | null {
+export function parseUser(ctx: GetServerSidePropsContext): DiscordUser | null {
   if (!ctx.req.headers.cookie) {
     return null;
   }
@@ -17,8 +17,8 @@ export function parseUser(ctx: GetServerSidePropsContext): { user: DiscordUser, 
 
   try {
     const { iat, exp, ...user } = verify(token, config.jwtSecret) as DiscordUser & { iat: number; exp: number };
-    return { user, token };
+    return user;
   } catch (e) {
-    return { user: null, token: null };
+    return null;
   }
 }

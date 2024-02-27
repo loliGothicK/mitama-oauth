@@ -1,17 +1,17 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import { parseUser } from "../utils/parse-user";
 import { DiscordUser } from "../utils/types";
 
 interface Props {
   user: DiscordUser;
-  token: string;
 }
 
-export default function Index({user, token}: Props) {
+export default function Index({user}: Props) {
   const router = useRouter();
   // 1秒後にリダイレクト
   setTimeout(() => {
-    router.push(`mitamatch://login?token=${token}`);
+    router.push(`mitamatch://login?user=${user}`);
   }, 1000);
   return (
     <h1>
@@ -23,16 +23,16 @@ export default function Index({user, token}: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
-  // const { user, token } = parseUser(ctx);
+  const user = parseUser(ctx);
 
-  // if (!user) {
+  if (!user) {
     return {
       redirect: {
         destination: "/api/oauth",
         permanent: false,
       },
     };
-  // }
+  }
 
-  // return { props: { user, token } };
+  return { props: { user } };
 };
