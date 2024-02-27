@@ -17,15 +17,15 @@ const OAUTH_QS = new URLSearchParams({
 const OAUTH_URI = `https://discord.com/api/oauth2/authorize?${OAUTH_QS}`;
 
 export async function GET(req: NextRequest) {
-  console.log(`REDIRECT_URI: ${REDIRECT_URI}`);
   const searchParams = req.nextUrl.searchParams;
-  const { origin } = req.nextUrl
+  const { origin } = req.nextUrl;
   if (searchParams.get('error')) {
     return NextResponse.redirect(`/?error=${searchParams.get('error')}`);
   }
 
   const code = searchParams.get("code");
   if (!code) {
+    console.log("no code found", OAUTH_URI);
     return NextResponse.redirect(OAUTH_URI);
   }
 
@@ -45,6 +45,7 @@ export async function GET(req: NextRequest) {
   }).then((res) => res.json());
 
   if (!access_token || typeof access_token !== "string") {
+    console.log("no access token", access_token);
     return NextResponse.redirect(OAUTH_URI);
   }
 
@@ -53,6 +54,7 @@ export async function GET(req: NextRequest) {
   }).then((res) => res.json());
 
   if (!("id" in me)) {
+    console.log('unauthorized', me);
     return NextResponse.redirect(OAUTH_URI);
   }
 
