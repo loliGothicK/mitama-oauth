@@ -1,10 +1,9 @@
-import { serialize } from "cookie";
 import { sign } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
+import { cookies } from "next/headers";
 import fetch from "node-fetch";
 import { config } from "../../utils/config";
 import { DiscordUser } from "../../utils/types";
-
 const scope = ["identify"].join(" ");
 const REDIRECT_URI = `${config.appUri}`;
 
@@ -57,15 +56,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const token = sign(me, config.jwtSecret, { expiresIn: "24h" });
 
-  res.setHeader(
-    "Set-Cookie",
-    serialize(config.cookieName, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== "development",
-      sameSite: "lax",
-      path: "/",
-    })
-  );
+  cookies().set(config.cookieName, token, {
+    secure: true,
+    httpOnly: true,
+    maxAge: 5000000,
+  });
 
   res.redirect("/");
 };
