@@ -1,6 +1,5 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { parseUser } from "../utils/parse-user";
 import { DiscordUser } from "../utils/types";
 
 interface Props {
@@ -24,16 +23,16 @@ export default function Index({user, token}: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
-  const { user, token } = parseUser(ctx);
+  // const { user, token } = parseUser(ctx);
 
-  if (!user) {
+  // if (!user) {
     return {
       redirect: {
         destination: "/api/oauth",
         permanent: false,
       },
     };
-  }
+  // }
 
-  return { props: { user, token } };
+  // return { props: { user, token } };
 };
