@@ -19,6 +19,6 @@ export function parseUser(ctx: GetServerSidePropsContext): { user: DiscordUser, 
     const { iat, exp, ...user } = verify(token, config.jwtSecret) as DiscordUser & { iat: number; exp: number };
     return { user, token };
   } catch (e) {
-    return null;
+    return { user: null, token: null };
   }
 }
