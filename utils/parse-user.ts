@@ -12,7 +12,7 @@ export function parseUser(ctx: GetServerSidePropsContext): { user: DiscordUser, 
   const token = parse(ctx.req.headers.cookie)[config.cookieName];
 
   if (!token) {
-    throw new Error("No token found");
+    throw new Error(`No token found: ${ctx.req.headers.cookie}`);
   }
 
   try {
