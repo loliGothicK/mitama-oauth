@@ -1,10 +1,10 @@
-import { GetServerSidePropsContext } from "next";
-import { DiscordUser } from "./types";
 import { parse } from "cookie";
 import { verify } from "jsonwebtoken";
+import { GetServerSidePropsContext } from "next";
 import { config } from "./config";
+import { DiscordUser } from "./types";
 
-export function parseUser(ctx: GetServerSidePropsContext): DiscordUser | null {
+export function parseUser(ctx: GetServerSidePropsContext): { user: DiscordUser, token: string } | null {
   if (!ctx.req.headers.cookie) {
     return null;
   }
@@ -17,7 +17,7 @@ export function parseUser(ctx: GetServerSidePropsContext): DiscordUser | null {
 
   try {
     const { iat, exp, ...user } = verify(token, config.jwtSecret) as DiscordUser & { iat: number; exp: number };
-    return user;
+    return { user, token };
   } catch (e) {
     return null;
   }

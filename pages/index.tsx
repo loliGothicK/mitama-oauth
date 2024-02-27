@@ -1,21 +1,30 @@
 import { GetServerSideProps } from "next";
-import { DiscordUser } from "../utils/types";
+import { useRouter } from "next/router";
 import { parseUser } from "../utils/parse-user";
+import { DiscordUser } from "../utils/types";
 
 interface Props {
   user: DiscordUser;
+  token: string;
 }
 
-export default function Index(props: Props) {
+export default function Index({user, token}: Props) {
+  const router = useRouter();
+  // 1秒後にリダイレクト
+  setTimeout(() => {
+    router.push(`mitamatch://login?token=${token}`);
+  }, 1000);
   return (
     <h1>
-      Hey, {props.user.username}#{props.user.discriminator}
+      Welcome to MitamatchOperations!
+      <br />
+      Successfully logged in as {user.username}.
     </h1>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async function (ctx) {
-  const user = parseUser(ctx);
+  const { user, token } = parseUser(ctx);
 
   if (!user) {
     return {
@@ -26,5 +35,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async function (ctx
     };
   }
 
-  return { props: { user } };
+  return { props: { user, token } };
 };
