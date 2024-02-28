@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const code = searchParams.get("code");
   if (!code) {
     console.log("no code found");
-    return NextResponse.redirect('/');
+    return NextResponse.redirect('${origin}?error=no_code');
   }
   
   const body = new URLSearchParams({
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
   
   if (!access_token || typeof access_token !== "string") {
     console.log("no access token", access_token);
-    return NextResponse.redirect('/');
+    return NextResponse.redirect(`${origin}?error=no_access_token`);
   }
   
   const me: DiscordUser | { unauthorized: true } = await fetch("https://discord.com/api/users/@me", {
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
   
   if (!("id" in me)) {
     console.log('unauthorized', me);
-    return NextResponse.redirect('/');
+    return NextResponse.redirect('${origin}?error=unauthorized');
   }
   
   const token = sign(me, config.JWT_SECRET, { expiresIn: "24h" });
