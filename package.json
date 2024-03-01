@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "js-cookie": "^3.0.5",
-    "next": "14.1.0",
+    "next": "14.1.1",
     "node-fetch": "^2.7.0",
     "react": "^18",
     "react-cookie": "^7.1.0",
@@ -26,7 +26,7 @@
     "@types/react-dom": "^18",
     "cookie": "^0.6.0",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-next": "14.1.1",
     "jsonwebtoken": "^9.0.2",
     "typescript": "^5",
     "zod": "^3.22.4"
