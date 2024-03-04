@@ -10,9 +10,10 @@ export default function Index() {
   const token = searchParams.get('token');
   if (!token) {
     redirect(`/api/auth`);
-  } else {
-    router.push(`mitamatch://auth?token=${token}`);
   }
+  useEffect(() => {
+    router.push(`mitamatch://auth?token=${token}`);
+  }, [router, token]);
   
   useEffect(() => {
     setTimeout(() => {

@@ -28,7 +28,10 @@ export async function GET(req: NextRequest) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     method: "POST",
     body,
-  }).then((res) => res.json());
+  }).then((res) => res.json()) as {
+    access_token: string,
+    token_type: string,
+  };
   
   if (!access_token || typeof access_token !== "string") {
     console.log("no access token", access_token);
@@ -37,7 +40,7 @@ export async function GET(req: NextRequest) {
   
   const me: DiscordUser | { unauthorized: true } = await fetch("https://discord.com/api/users/@me", {
     headers: { Authorization: `${token_type} ${access_token}` },
-  }).then((res) => res.json());
+  }).then((res) => res.json()) as DiscordUser | { unauthorized: true };
   
   if (!("id" in me)) {
     console.log('unauthorized', me);
