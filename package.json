@@ -12,8 +12,8 @@
     "fmt:check": "yarn biome format ."
   },
   "dependencies": {
-    "@emotion/react": "11.11.4",
-    "@emotion/styled": "11.11.5",
+    "@emotion/react": "11.13.3",
+    "@emotion/styled": "11.13.0",
     "@mui/material": "5.15.15",
     "js-cookie": "3.0.5",
     "next": "14.2.2",
