@@ -983,10 +983,10 @@ prop-types@^15.6.2, prop-types@^15.8.1:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-react-cookie@7.1.4:
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-7.1.4.tgz#1e35c9f11394b44fbbc30c5eba1287d89258e993"
-  integrity sha512-wDxxa/HYaSXSMlyWJvJ5uZTzIVtQTPf1gMksFgwAz/2/W3lCtY8r4OChCXMPE7wax0PAdMY97UkNJedGv7KnDw==
+react-cookie@7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-7.2.1.tgz#4a90603df57634bd7edaca325a3b9b584550680a"
+  integrity sha512-UcE6njAy5UmKzU9RywIvvtbHIQydhh6JP55yVbGwQ8Tp/wSPp2HOYVZdRI55zfbkW6zQv9SEs42mS3a9cIUQ0g==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.5"
     hoist-non-react-statics "^3.3.2"
